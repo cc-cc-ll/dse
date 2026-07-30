@@ -1,3 +1,125 @@
+const SOURCES = ["HKDSE", "CE", "A-Level"];
+
+function getSource(index) {
+  return SOURCES[index % SOURCES.length];
+}
+
+function getYear(index) {
+  return String(2008 + (index % 18));
+}
+
+function buildMathQuestions() {
+  const questions = [];
+  for (let i = 1; i <= 100; i += 1) {
+    const topic = i % 2 === 0 ? "Calculus" : "Algebra";
+    const source = getSource(i);
+    const year = getYear(i);
+
+    if (topic === "Algebra") {
+      const a = 2 + (i % 5);
+      const b = 3 + (i % 7);
+      const c = 4 + (i % 6);
+      questions.push({
+        topic,
+        source,
+        year,
+        question: `Paper 1 style: Solve ${a}x² - ${b}x - ${c} = 0 and hence find the sum of the roots.`,
+        syllabusAligned: true,
+      });
+    } else {
+      const p = 2 + (i % 4);
+      const q = 1 + (i % 6);
+      const x = 1 + (i % 5);
+      questions.push({
+        topic,
+        source,
+        year,
+        question: `Paper 1 style: Let y = ${p}x³ - ${q}x² + 6. Find dy/dx and evaluate the gradient at x = ${x}.`,
+        syllabusAligned: true,
+      });
+    }
+  }
+  return questions;
+}
+
+function buildEnglishQuestions() {
+  const readingThemes = [
+    "healthy lifestyle campaign",
+    "social media usage in schools",
+    "public transport planning",
+    "youth volunteer programme",
+    "plastic reduction policy",
+  ];
+  const writingTasks = [
+    "letter to the editor",
+    "proposal to school principal",
+    "speech for assembly",
+    "article for school magazine",
+    "blog post for student council",
+  ];
+
+  const questions = [];
+  for (let i = 1; i <= 100; i += 1) {
+    const topic = i % 2 === 0 ? "Writing Skills" : "Reading Skills";
+    const source = getSource(i);
+    const year = getYear(i);
+    const theme = readingThemes[i % readingThemes.length];
+    const task = writingTasks[i % writingTasks.length];
+
+    if (topic === "Reading Skills") {
+      questions.push({
+        topic,
+        source,
+        year,
+        question: `Paper 1 style: Read a passage about ${theme}. Identify the writer's tone and explain two language features that shape that tone.`,
+        syllabusAligned: true,
+      });
+    } else {
+      questions.push({
+        topic,
+        source,
+        year,
+        question: `Paper 2 style: Write a ${task} (220-280 words) on ${theme}. Use an appropriate register and support your ideas with examples.`,
+        syllabusAligned: true,
+      });
+    }
+  }
+  return questions;
+}
+
+function buildPhysicsQuestions() {
+  const questions = [];
+  for (let i = 1; i <= 100; i += 1) {
+    const topic = i % 2 === 0 ? "Electricity and Magnetism" : "Mechanics";
+    const source = getSource(i);
+    const year = getYear(i);
+
+    if (topic === "Mechanics") {
+      const acceleration = (1.5 + (i % 5) * 0.5).toFixed(1);
+      const time = 3 + (i % 6);
+      questions.push({
+        topic,
+        source,
+        year,
+        question: `Paper 1 style: A cart starts from rest and accelerates uniformly at ${acceleration} m/s² for ${time} s. Find (a) final speed and (b) displacement.`,
+        syllabusAligned: true,
+      });
+    } else {
+      const voltage = 6 + (i % 8) * 3;
+      const r1 = 2 + (i % 5);
+      const r2 = 4 + (i % 6);
+      questions.push({
+        topic,
+        source,
+        year,
+        question: `Paper 1 style: A ${voltage} V battery is connected to resistors ${r1} Ω and ${r2} Ω in parallel. Calculate total current and power supplied.`,
+        syllabusAligned: true,
+      });
+    }
+  }
+  return questions;
+}
+
 const subjects = [
   {
     id: "mathematics",
@@ -20,30 +142,7 @@ const subjects = [
         ],
       },
     ],
-    exercises: [
-      {
-        topic: "Algebra",
-        source: "HKDSE",
-        year: "2023",
-        question: "Solve 2x² - 5x - 3 = 0 and state both roots.",
-        syllabusAligned: true,
-      },
-      {
-        topic: "Calculus",
-        source: "CE",
-        year: "2010",
-        question: "Differentiate y = 3x³ - 4x + 7 and find dy/dx at x = 2.",
-        syllabusAligned: true,
-      },
-      {
-        topic: "Calculus",
-        source: "A-Level",
-        year: "2018",
-        question:
-          "Use integration by parts to evaluate ∫x ln(x) dx. (Excluded for HKDSE compulsory)",
-        syllabusAligned: false,
-      },
-    ],
+    exercises: buildMathQuestions(),
   },
   {
     id: "english",
@@ -66,32 +165,7 @@ const subjects = [
         ],
       },
     ],
-    exercises: [
-      {
-        topic: "Reading Skills",
-        source: "HKDSE",
-        year: "2022",
-        question:
-          "Read a short article and identify two persuasive language techniques.",
-        syllabusAligned: true,
-      },
-      {
-        topic: "Writing Skills",
-        source: "CE",
-        year: "2009",
-        question:
-          "Write a 250-word letter to the editor about campus environmental actions.",
-        syllabusAligned: true,
-      },
-      {
-        topic: "Writing Skills",
-        source: "A-Level",
-        year: "2017",
-        question:
-          "Write a 1200-word literature analysis using critical theory references.",
-        syllabusAligned: false,
-      },
-    ],
+    exercises: buildEnglishQuestions(),
   },
   {
     id: "physics",
@@ -114,32 +188,7 @@ const subjects = [
         ],
       },
     ],
-    exercises: [
-      {
-        topic: "Mechanics",
-        source: "HKDSE",
-        year: "2021",
-        question:
-          "A trolley accelerates uniformly from rest at 2.5 m/s² for 4 s. Find final speed and distance.",
-        syllabusAligned: true,
-      },
-      {
-        topic: "Electricity and Magnetism",
-        source: "A-Level",
-        year: "2016",
-        question:
-          "A 12 V battery is connected to 3 Ω and 6 Ω resistors in parallel. Find total current.",
-        syllabusAligned: true,
-      },
-      {
-        topic: "Mechanics",
-        source: "A-Level",
-        year: "2019",
-        question:
-          "Derive Lagrange's equation for a two-body constrained system.",
-        syllabusAligned: false,
-      },
-    ],
+    exercises: buildPhysicsQuestions(),
   },
 ];
 
