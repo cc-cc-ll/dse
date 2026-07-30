@@ -120,6 +120,189 @@ function buildPhysicsQuestions() {
   return questions;
 }
 
+function buildChemistryQuestions() {
+  const questions = [];
+  for (let i = 1; i <= 100; i += 1) {
+    const topic = i % 2 === 0 ? "Acids and Bases" : "Mole Concept";
+    const source = getSource(i);
+    const year = getYear(i);
+
+    if (topic === "Mole Concept") {
+      const mass = 5 + (i % 16);
+      const mr = 18 + (i % 30);
+      questions.push({
+        topic,
+        source,
+        year,
+        question: `Paper 1 style: A sample has mass ${mass}.0 g and molar mass ${mr}.0 g mol⁻¹. Calculate the amount of substance and number of molecules.`,
+        syllabusAligned: true,
+      });
+    } else {
+      const ph = 2 + (i % 6);
+      questions.push({
+        topic,
+        source,
+        year,
+        question: `Paper 1 style: A solution has pH ${ph}. Calculate [H⁺] and state whether it is acidic, neutral or alkaline.`,
+        syllabusAligned: true,
+      });
+    }
+  }
+  return questions;
+}
+
+function buildBiologyQuestions() {
+  const questions = [];
+  for (let i = 1; i <= 100; i += 1) {
+    const topic = i % 2 === 0 ? "Ecology" : "Human Physiology";
+    const source = getSource(i);
+    const year = getYear(i);
+
+    if (topic === "Human Physiology") {
+      const pulse = 65 + (i % 30);
+      questions.push({
+        topic,
+        source,
+        year,
+        question: `Paper 1 style: A student's pulse rate changes from ${pulse} bpm at rest to higher values after exercise. Explain two physiological reasons for this change.`,
+        syllabusAligned: true,
+      });
+    } else {
+      const quadrat = 1 + (i % 5);
+      questions.push({
+        topic,
+        source,
+        year,
+        question: `Paper 1 style: In quadrat sampling trial ${quadrat}, suggest one method to improve reliability and explain why random sampling is required.`,
+        syllabusAligned: true,
+      });
+    }
+  }
+  return questions;
+}
+
+function buildEconomicsQuestions() {
+  const questions = [];
+  for (let i = 1; i <= 100; i += 1) {
+    const topic = i % 2 === 0 ? "Demand and Supply" : "Market Efficiency";
+    const source = getSource(i);
+    const year = getYear(i);
+
+    if (topic === "Demand and Supply") {
+      const change = 5 + (i % 11);
+      questions.push({
+        topic,
+        source,
+        year,
+        question: `Paper 1 style: The price of a product rises by ${change}%. Explain, with demand-supply analysis, how equilibrium quantity may change.`,
+        syllabusAligned: true,
+      });
+    } else {
+      const tax = 2 + (i % 6);
+      questions.push({
+        topic,
+        source,
+        year,
+        question: `Paper 1 style: A specific tax of HK$${tax} per unit is imposed. Explain the possible deadweight loss and who may bear more tax burden.`,
+        syllabusAligned: true,
+      });
+    }
+  }
+  return questions;
+}
+
+function buildBAFSQuestions() {
+  const questions = [];
+  for (let i = 1; i <= 100; i += 1) {
+    const topic = i % 2 === 0 ? "Accounting Cycle" : "Financial Ratios";
+    const source = getSource(i);
+    const year = getYear(i);
+
+    if (topic === "Accounting Cycle") {
+      const sales = 80 + i;
+      const cost = 50 + (i % 25);
+      questions.push({
+        topic,
+        source,
+        year,
+        question: `Paper 1 style: Prepare journal entries for credit sales of HK$${sales},000 and cost of goods sold of HK$${cost},000.`,
+        syllabusAligned: true,
+      });
+    } else {
+      const currentAssets = 120 + i;
+      const currentLiabilities = 60 + (i % 20);
+      questions.push({
+        topic,
+        source,
+        year,
+        question: `Paper 1 style: Given current assets HK$${currentAssets},000 and current liabilities HK$${currentLiabilities},000, compute the current ratio and comment briefly on liquidity.`,
+        syllabusAligned: true,
+      });
+    }
+  }
+  return questions;
+}
+
+function buildICTQuestions() {
+  const questions = [];
+  for (let i = 1; i <= 100; i += 1) {
+    const topic = i % 2 === 0 ? "Database" : "Networking";
+    const source = getSource(i);
+    const year = getYear(i);
+
+    if (topic === "Networking") {
+      const users = 20 + (i % 40);
+      questions.push({
+        topic,
+        source,
+        year,
+        question: `Paper 1 style: A school LAN serves ${users} users. State two advantages of using a client-server model and one security risk to manage.`,
+        syllabusAligned: true,
+      });
+    } else {
+      const records = 1000 + i * 20;
+      questions.push({
+        topic,
+        source,
+        year,
+        question: `Paper 1 style: A database table stores ${records} records. Explain why a primary key is needed and write one suitable query requirement in words.`,
+        syllabusAligned: true,
+      });
+    }
+  }
+  return questions;
+}
+
+function buildHistoryQuestions() {
+  const questions = [];
+  for (let i = 1; i <= 100; i += 1) {
+    const topic = i % 2 === 0 ? "Modern China" : "20th Century World";
+    const source = getSource(i);
+    const year = getYear(i);
+
+    if (topic === "20th Century World") {
+      const decade = 1910 + (i % 9) * 10;
+      questions.push({
+        topic,
+        source,
+        year,
+        question: `Paper 1 style: With reference to international relations in the ${decade}s, explain one cause of conflict and one attempt at cooperation.`,
+        syllabusAligned: true,
+      });
+    } else {
+      const period = 1949 + (i % 5) * 10;
+      questions.push({
+        topic,
+        source,
+        year,
+        question: `Paper 1 style: Explain one key political or economic development in China after ${period} and assess its impact on society.`,
+        syllabusAligned: true,
+      });
+    }
+  }
+  return questions;
+}
+
 const subjects = [
   {
     id: "mathematics",
@@ -189,6 +372,144 @@ const subjects = [
       },
     ],
     exercises: buildPhysicsQuestions(),
+  },
+  {
+    id: "chemistry",
+    name: "Chemistry",
+    tutorials: [
+      {
+        topic: "Mole Concept",
+        keypoints: [
+          "Convert between mass, moles and particles",
+          "Use chemical equations for mole ratio calculations",
+          "Handle concentration and volume questions",
+        ],
+      },
+      {
+        topic: "Acids and Bases",
+        keypoints: [
+          "Interpret pH and [H⁺] relationship",
+          "Apply neutralization concepts",
+          "Distinguish strong vs weak acids and bases",
+        ],
+      },
+    ],
+    exercises: buildChemistryQuestions(),
+  },
+  {
+    id: "biology",
+    name: "Biology",
+    tutorials: [
+      {
+        topic: "Human Physiology",
+        keypoints: [
+          "Gas exchange and transport in humans",
+          "Homeostasis and feedback control",
+          "Responses to exercise and stress",
+        ],
+      },
+      {
+        topic: "Ecology",
+        keypoints: [
+          "Population and community relationships",
+          "Sampling methods and data reliability",
+          "Human impact on ecosystems",
+        ],
+      },
+    ],
+    exercises: buildBiologyQuestions(),
+  },
+  {
+    id: "economics",
+    name: "Economics",
+    tutorials: [
+      {
+        topic: "Demand and Supply",
+        keypoints: [
+          "Market equilibrium and shifts in curves",
+          "Price elasticity interpretation",
+          "Effects of external shocks",
+        ],
+      },
+      {
+        topic: "Market Efficiency",
+        keypoints: [
+          "Consumer and producer surplus",
+          "Deadweight loss from intervention",
+          "Market failure and policy responses",
+        ],
+      },
+    ],
+    exercises: buildEconomicsQuestions(),
+  },
+  {
+    id: "bafs",
+    name: "BAFS (Accounting)",
+    tutorials: [
+      {
+        topic: "Accounting Cycle",
+        keypoints: [
+          "Journal entries and ledger posting",
+          "Trial balance and adjustments",
+          "Preparation of basic financial statements",
+        ],
+      },
+      {
+        topic: "Financial Ratios",
+        keypoints: [
+          "Liquidity and solvency ratios",
+          "Profitability ratio interpretation",
+          "Limitations of ratio analysis",
+        ],
+      },
+    ],
+    exercises: buildBAFSQuestions(),
+  },
+  {
+    id: "ict",
+    name: "ICT",
+    tutorials: [
+      {
+        topic: "Networking",
+        keypoints: [
+          "Common network architectures",
+          "IP addressing and basic communication",
+          "Security threats and protections",
+        ],
+      },
+      {
+        topic: "Database",
+        keypoints: [
+          "Primary and foreign keys",
+          "Data normalization basics",
+          "Query design and data integrity",
+        ],
+      },
+    ],
+    exercises: buildICTQuestions(),
+  },
+  {
+    id: "history",
+    name: "History",
+    tutorials: [
+      {
+        topic: "20th Century World",
+        keypoints: [
+          "Causes and consequences of major conflicts",
+          "Diplomacy and international cooperation",
+          "Interpreting historical sources",
+        ],
+      },
+      {
+        topic: "Modern China",
+        keypoints: [
+          "Major reforms and policy shifts",
+          "Social and economic transformation",
+          "Cause-and-effect evaluation in essays",
+        ],
+      },
+    ],
+    exercises: buildHistoryQuestions(),
   },
 ];
 
