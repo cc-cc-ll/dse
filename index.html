@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HKDSE Study Hub</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <h1>HKDSE Study Hub</h1>
+      <p>
+        Tutorials by topic and syllabus-aligned exercises based on HKDSE, CE
+        and A-Level style papers.
+      </p>
+    </header>
+
+    <main class="layout">
+      <aside class="panel">
+        <h2>Subjects</h2>
+        <div id="subjectList" class="subject-list"></div>
+      </aside>
+
+      <section class="panel content">
+        <div id="subjectHeader"></div>
+
+        <div class="filters">
+          <label>
+            Topic
+            <select id="topicFilter"></select>
+          </label>
+          <label>
+            Source
+            <select id="sourceFilter">
+              <option value="all">All sources</option>
+              <option value="HKDSE">HKDSE</option>
+              <option value="CE">CE</option>
+              <option value="A-Level">A-Level</option>
+            </select>
+          </label>
+        </div>
+
+        <section>
+          <h3>Tutorial Keypoints</h3>
+          <div id="tutorials" class="cards"></div>
+        </section>
+
+        <section>
+          <h3>Exercises</h3>
+          <ul id="exerciseList" class="exercise-list"></ul>
+        </section>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
