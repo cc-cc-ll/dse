@@ -14,3 +14,13 @@ Simple static website for HKDSE-focused study support.
 ## Run locally
 
 Open `/home/runner/work/dse/dse/index.html` in your browser.
+
+## Public hosting (GitHub Pages)
+
+This repository is configured to deploy via GitHub Actions to GitHub Pages.
+
+Expected URL:
+
+`https://cc-cc-ll.github.io/dse/`
+
+If this is the first deployment, enable **Settings → Pages → Source: GitHub Actions** in the repository.
