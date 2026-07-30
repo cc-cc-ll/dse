@@ -1,0 +1,114 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  color: #14213d;
+  background: #f7f8fb;
+}
+
+.hero {
+  background: #1f3c88;
+  color: #fff;
+  padding: 2rem;
+}
+
+.hero h1 {
+  margin: 0 0 0.5rem;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.panel {
+  background: #fff;
+  border-radius: 10px;
+  padding: 1rem;
+  box-shadow: 0 4px 16px rgba(20, 33, 61, 0.08);
+}
+
+.subject-list {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.subject-btn {
+  border: 1px solid #d9deea;
+  background: #fff;
+  border-radius: 8px;
+  padding: 0.6rem 0.75rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.subject-btn.active {
+  background: #e8efff;
+  border-color: #1f3c88;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.filters select {
+  margin-left: 0.4rem;
+}
+
+.cards {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.card {
+  border: 1px solid #e1e6f3;
+  border-radius: 8px;
+  padding: 0.75rem;
+}
+
+.card h4 {
+  margin: 0 0 0.4rem;
+}
+
+.card ul {
+  margin: 0;
+  padding-left: 1rem;
+}
+
+.exercise-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.exercise-list li {
+  border: 1px solid #e1e6f3;
+  border-radius: 8px;
+  padding: 0.75rem;
+}
+
+.exercise-meta {
+  font-size: 0.9rem;
+  color: #52607a;
+}
+
+.empty {
+  color: #52607a;
+  font-style: italic;
+}
+
+@media (max-width: 840px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
