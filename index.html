@@ -30,6 +30,15 @@
             <select id="topicFilter"></select>
           </label>
           <label>
+            Difficulty
+            <select id="difficultyFilter">
+              <option value="all">All levels</option>
+              <option value="Easy">Easy</option>
+              <option value="Medium">Medium</option>
+              <option value="Hard">Hard</option>
+            </select>
+          </label>
+          <label>
             Source
             <select id="sourceFilter">
               <option value="all">All sources</option>
@@ -38,6 +47,14 @@
               <option value="A-Level">A-Level</option>
             </select>
           </label>
+          <label class="keyword-filter">
+            Keyword
+            <input
+              id="keywordFilter"
+              type="search"
+              placeholder="Search question text..."
+            />
+          </label>
         </div>
 
         <section>
@@ -45,8 +62,21 @@
           <div id="tutorials" class="cards"></div>
         </section>
 
+        <section class="quick-practice">
+          <div class="practice-header">
+            <h3>Quick Practice</h3>
+            <button id="randomQuestionBtn" type="button">Pick Random Question</button>
+          </div>
+          <article id="randomQuestionCard" class="card">
+            <p class="empty">Use the button to pick a random question from your current filters.</p>
+          </article>
+        </section>
+
         <section>
-          <h3>Exercises</h3>
+          <div class="exercise-header">
+            <h3>Exercises</h3>
+            <span id="resultsCount"></span>
+          </div>
           <ul id="exerciseList" class="exercise-list"></ul>
         </section>
       </section>

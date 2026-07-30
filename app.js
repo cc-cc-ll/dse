@@ -1,4 +1,5 @@
 const SOURCES = ["HKDSE", "CE", "A-Level"];
+const DIFFICULTIES = ["Easy", "Medium", "Hard"];
 
 function getSource(index) {
   return SOURCES[index % SOURCES.length];
@@ -8,9 +9,13 @@ function getYear(index) {
   return String(2008 + (index % 18));
 }
 
+function getDifficulty(index) {
+  return DIFFICULTIES[index % DIFFICULTIES.length];
+}
+
 function buildMathQuestions() {
   const questions = [];
-  for (let i = 1; i <= 100; i += 1) {
+  for (let i = 1; i <= 180; i += 1) {
     const topic = i % 2 === 0 ? "Calculus" : "Algebra";
     const source = getSource(i);
     const year = getYear(i);
@@ -59,7 +64,7 @@ function buildEnglishQuestions() {
   ];
 
   const questions = [];
-  for (let i = 1; i <= 100; i += 1) {
+  for (let i = 1; i <= 180; i += 1) {
     const topic = i % 2 === 0 ? "Writing Skills" : "Reading Skills";
     const source = getSource(i);
     const year = getYear(i);
@@ -89,7 +94,7 @@ function buildEnglishQuestions() {
 
 function buildPhysicsQuestions() {
   const questions = [];
-  for (let i = 1; i <= 100; i += 1) {
+  for (let i = 1; i <= 180; i += 1) {
     const topic = i % 2 === 0 ? "Electricity and Magnetism" : "Mechanics";
     const source = getSource(i);
     const year = getYear(i);
@@ -122,7 +127,7 @@ function buildPhysicsQuestions() {
 
 function buildChemistryQuestions() {
   const questions = [];
-  for (let i = 1; i <= 100; i += 1) {
+  for (let i = 1; i <= 180; i += 1) {
     const topic = i % 2 === 0 ? "Acids and Bases" : "Mole Concept";
     const source = getSource(i);
     const year = getYear(i);
@@ -153,7 +158,7 @@ function buildChemistryQuestions() {
 
 function buildBiologyQuestions() {
   const questions = [];
-  for (let i = 1; i <= 100; i += 1) {
+  for (let i = 1; i <= 180; i += 1) {
     const topic = i % 2 === 0 ? "Ecology" : "Human Physiology";
     const source = getSource(i);
     const year = getYear(i);
@@ -183,7 +188,7 @@ function buildBiologyQuestions() {
 
 function buildEconomicsQuestions() {
   const questions = [];
-  for (let i = 1; i <= 100; i += 1) {
+  for (let i = 1; i <= 180; i += 1) {
     const topic = i % 2 === 0 ? "Demand and Supply" : "Market Efficiency";
     const source = getSource(i);
     const year = getYear(i);
@@ -213,7 +218,7 @@ function buildEconomicsQuestions() {
 
 function buildBAFSQuestions() {
   const questions = [];
-  for (let i = 1; i <= 100; i += 1) {
+  for (let i = 1; i <= 180; i += 1) {
     const topic = i % 2 === 0 ? "Accounting Cycle" : "Financial Ratios";
     const source = getSource(i);
     const year = getYear(i);
@@ -245,7 +250,7 @@ function buildBAFSQuestions() {
 
 function buildICTQuestions() {
   const questions = [];
-  for (let i = 1; i <= 100; i += 1) {
+  for (let i = 1; i <= 180; i += 1) {
     const topic = i % 2 === 0 ? "Database" : "Networking";
     const source = getSource(i);
     const year = getYear(i);
@@ -275,7 +280,7 @@ function buildICTQuestions() {
 
 function buildHistoryQuestions() {
   const questions = [];
-  for (let i = 1; i <= 100; i += 1) {
+  for (let i = 1; i <= 180; i += 1) {
     const topic = i % 2 === 0 ? "Modern China" : "20th Century World";
     const source = getSource(i);
     const year = getYear(i);
@@ -513,6 +518,14 @@ const subjects = [
   },
 ];
 
+subjects.forEach((subject) => {
+  subject.exercises = subject.exercises.map((exercise, index) => ({
+    id: `${subject.id}-${index + 1}`,
+    difficulty: getDifficulty(index + 1),
+    ...exercise,
+  }));
+});
+
 let selectedSubjectId = subjects[0].id;
 
 const subjectList = document.getElementById("subjectList");
@@ -521,9 +534,39 @@ const tutorialsContainer = document.getElementById("tutorials");
 const exerciseList = document.getElementById("exerciseList");
 const topicFilter = document.getElementById("topicFilter");
 const sourceFilter = document.getElementById("sourceFilter");
+const difficultyFilter = document.getElementById("difficultyFilter");
+const keywordFilter = document.getElementById("keywordFilter");
+const randomQuestionBtn = document.getElementById("randomQuestionBtn");
+const randomQuestionCard = document.getElementById("randomQuestionCard");
+const resultsCount = document.getElementById("resultsCount");
 
 function getSelectedSubject() {
   return subjects.find((subject) => subject.id === selectedSubjectId);
+}
+
+function getFilteredExercises(subject) {
+  const chosenTopic = topicFilter.value || "all";
+  const chosenSource = sourceFilter.value || "all";
+  const chosenDifficulty = difficultyFilter.value || "all";
+  const keyword = (keywordFilter.value || "").trim().toLowerCase();
+
+  return subject.exercises.filter((exercise) => {
+    if (!exercise.syllabusAligned) {
+      return false;
+    }
+    const topicMatch =
+      chosenTopic === "all" ? true : exercise.topic === chosenTopic;
+    const sourceMatch =
+      chosenSource === "all" ? true : exercise.source === chosenSource;
+    const difficultyMatch =
+      chosenDifficulty === "all"
+        ? true
+        : exercise.difficulty === chosenDifficulty;
+    const keywordMatch = keyword
+      ? exercise.question.toLowerCase().includes(keyword)
+      : true;
+    return topicMatch && sourceMatch && difficultyMatch && keywordMatch;
+  });
 }
 
 function renderSubjects() {
@@ -557,7 +600,7 @@ function renderHeader(subject) {
   ).length;
   subjectHeader.innerHTML = `
     <h2>${subject.name}</h2>
-    <p>Only questions tagged as within HKDSE syllabus are shown (${totalExercises} available).</p>
+    <p>Expanded bank with ${totalExercises} in-syllabus questions. Use topic, source, difficulty and keyword filters for targeted practice.</p>
   `;
 }
 
@@ -574,21 +617,25 @@ function renderTutorials(subject) {
   });
 }
 
+function renderRandomQuestion(exercises) {
+  if (!exercises.length) {
+    randomQuestionCard.innerHTML =
+      '<p class="empty">No question available for the selected filters.</p>';
+    return;
+  }
+  const chosen = exercises[Math.floor(Math.random() * exercises.length)];
+  randomQuestionCard.innerHTML = `
+    <div class="exercise-meta">${chosen.source} • ${chosen.year} • ${chosen.topic} • ${chosen.difficulty}</div>
+    <p>${chosen.question}</p>
+  `;
+}
+
 function renderExercises(subject) {
-  const chosenTopic = topicFilter.value || "all";
-  const chosenSource = sourceFilter.value || "all";
+  const filtered = getFilteredExercises(subject);
 
-  const filtered = subject.exercises.filter((exercise) => {
-    if (!exercise.syllabusAligned) {
-      return false;
-    }
-    const topicMatch =
-      chosenTopic === "all" ? true : exercise.topic === chosenTopic;
-    const sourceMatch =
-      chosenSource === "all" ? true : exercise.source === chosenSource;
-    return topicMatch && sourceMatch;
-  });
-
+  resultsCount.textContent = `${filtered.length} result${
+    filtered.length === 1 ? "" : "s"
+  }`;
   exerciseList.innerHTML = "";
 
   if (!filtered.length) {
@@ -600,11 +647,18 @@ function renderExercises(subject) {
   filtered.forEach((exercise) => {
     const item = document.createElement("li");
     item.innerHTML = `
-      <div class="exercise-meta">${exercise.source} • ${exercise.year} • ${exercise.topic}</div>
+      <div class="exercise-meta">${exercise.source} • ${exercise.year} • ${exercise.topic} • ${exercise.difficulty}</div>
       <p>${exercise.question}</p>
     `;
     exerciseList.appendChild(item);
   });
+}
+
+function rerenderExercisesAndClearRandom() {
+  const subject = getSelectedSubject();
+  renderExercises(subject);
+  randomQuestionCard.innerHTML =
+    '<p class="empty">Use the button to pick a random question from your current filters.</p>';
 }
 
 function renderAll() {
@@ -614,11 +668,16 @@ function renderAll() {
   renderHeader(subject);
   renderTutorials(subject);
   renderExercises(subject);
+  randomQuestionCard.innerHTML =
+    '<p class="empty">Use the button to pick a random question from your current filters.</p>';
 }
 
-topicFilter.addEventListener("change", () => renderExercises(getSelectedSubject()));
-sourceFilter.addEventListener("change", () =>
-  renderExercises(getSelectedSubject())
+topicFilter.addEventListener("change", rerenderExercisesAndClearRandom);
+sourceFilter.addEventListener("change", rerenderExercisesAndClearRandom);
+difficultyFilter.addEventListener("change", rerenderExercisesAndClearRandom);
+keywordFilter.addEventListener("input", rerenderExercisesAndClearRandom);
+randomQuestionBtn.addEventListener("click", () =>
+  renderRandomQuestion(getFilteredExercises(getSelectedSubject()))
 );
 
 renderAll();

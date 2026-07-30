@@ -7,8 +7,10 @@ Simple static website for HKDSE-focused study support.
 - Subject-based browsing
 - Topic tutorials with keypoints
 - Exercise bank with questions from HKDSE, CE and A-Level sources
-- 100 generated, syllabus-aligned practice questions per subject
-- Current subjects: Mathematics, English, Physics, Chemistry, Biology, Economics, BAFS, ICT, History (900 questions total)
+- 180 generated, syllabus-aligned practice questions per subject
+- Advanced exercise filters: topic, source, difficulty, keyword search
+- Quick Practice random question picker based on active filters
+- Current subjects: Mathematics, English, Physics, Chemistry, Biology, Economics, BAFS, ICT, History (1620 questions total)
 - Automatic syllabus filtering: only questions marked in HKDSE syllabus are displayed
 
 ## Run locally

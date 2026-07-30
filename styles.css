@@ -63,6 +63,19 @@ body {
   margin-left: 0.4rem;
 }
 
+.filters input {
+  margin-left: 0.4rem;
+}
+
+.keyword-filter {
+  min-width: 240px;
+}
+
+.keyword-filter input {
+  width: 100%;
+  max-width: 300px;
+}
+
 .cards {
   display: grid;
   gap: 0.75rem;
@@ -98,6 +111,36 @@ body {
 }
 
 .exercise-meta {
+  font-size: 0.9rem;
+  color: #52607a;
+}
+
+.quick-practice {
+  margin-top: 1.25rem;
+}
+
+.practice-header,
+.exercise-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.practice-header button {
+  border: 1px solid #1f3c88;
+  border-radius: 8px;
+  background: #1f3c88;
+  color: #fff;
+  padding: 0.45rem 0.75rem;
+  cursor: pointer;
+}
+
+.practice-header button:hover {
+  background: #17306f;
+}
+
+#resultsCount {
   font-size: 0.9rem;
   color: #52607a;
 }
