@@ -119,6 +119,11 @@ body {
   margin-top: 1.25rem;
 }
 
+.resource-section,
+.mock-paper-section {
+  margin-top: 1.25rem;
+}
+
 .practice-header,
 .exercise-header {
   display: flex;
@@ -138,6 +143,27 @@ body {
 
 .practice-header button:hover {
   background: #17306f;
+}
+
+.resource-list {
+  margin: 0;
+  padding-left: 1.1rem;
+  display: grid;
+  gap: 0.45rem;
+}
+
+.resource-list a {
+  color: #1f3c88;
+}
+
+.resource-note {
+  margin-top: 0.2rem;
+  color: #52607a;
+}
+
+#mockPaperCard ol {
+  margin: 0.35rem 0 0;
+  padding-left: 1.1rem;
 }
 
 #resultsCount {

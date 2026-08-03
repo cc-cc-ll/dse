@@ -1,5 +1,16 @@
 const SOURCES = ["HKDSE", "CE", "A-Level"];
 const DIFFICULTIES = ["Easy", "Medium", "Hard"];
+const PAPER_TYPES = ["Paper 1", "Paper 2"];
+const OFFICIAL_RESOURCES = [
+  {
+    label: "HKEAA: HKDSE Subject Examination Report & Question Papers",
+    url: "https://www.hkeaa.edu.hk/en/resources/publications/hkdse/exam_report_question_papers/",
+  },
+  {
+    label: "HKEAA: HKDSE Examination Reports",
+    url: "https://www.hkeaa.edu.hk/en/hkdse/assessment-information/examination-report/",
+  },
+];
 
 function getSource(index) {
   return SOURCES[index % SOURCES.length];
@@ -11,6 +22,10 @@ function getYear(index) {
 
 function getDifficulty(index) {
   return DIFFICULTIES[index % DIFFICULTIES.length];
+}
+
+function getPaperType(index) {
+  return PAPER_TYPES[index % PAPER_TYPES.length];
 }
 
 function buildMathQuestions() {
@@ -522,6 +537,8 @@ subjects.forEach((subject) => {
   subject.exercises = subject.exercises.map((exercise, index) => ({
     id: `${subject.id}-${index + 1}`,
     difficulty: getDifficulty(index + 1),
+    paper: getPaperType(index + 1),
+    marks: 3 + ((index + 1) % 8),
     ...exercise,
   }));
 });
@@ -539,6 +556,9 @@ const keywordFilter = document.getElementById("keywordFilter");
 const randomQuestionBtn = document.getElementById("randomQuestionBtn");
 const randomQuestionCard = document.getElementById("randomQuestionCard");
 const resultsCount = document.getElementById("resultsCount");
+const officialResources = document.getElementById("officialResources");
+const generateMockBtn = document.getElementById("generateMockBtn");
+const mockPaperCard = document.getElementById("mockPaperCard");
 
 function getSelectedSubject() {
   return subjects.find((subject) => subject.id === selectedSubjectId);
@@ -567,6 +587,32 @@ function getFilteredExercises(subject) {
       : true;
     return topicMatch && sourceMatch && difficultyMatch && keywordMatch;
   });
+}
+
+function getMockConfig(subject) {
+  if (subject.id === "english") {
+    return {
+      title: "Paper 2 Writing Practice",
+      duration: "1 hr 45 min",
+      questionCount: 6,
+      instruction:
+        "Attempt all questions. Plan briefly, then answer in complete and well-structured responses.",
+    };
+  }
+  return {
+    title: "Paper 1 Structured Questions",
+    duration: "1 hr 30 min",
+    questionCount: 8,
+    instruction:
+      "Attempt all questions. Show clear reasoning and include units or definitions where appropriate.",
+  };
+}
+
+function pickQuestionsForMockPaper(exercises, count) {
+  const shuffled = [...exercises]
+    .sort(() => Math.random() - 0.5)
+    .slice(0, Math.min(count, exercises.length));
+  return shuffled;
 }
 
 function renderSubjects() {
@@ -617,6 +663,13 @@ function renderTutorials(subject) {
   });
 }
 
+function renderOfficialResources() {
+  officialResources.innerHTML = OFFICIAL_RESOURCES.map(
+    (resource) =>
+      `<li><a href="${resource.url}" target="_blank" rel="noopener noreferrer">${resource.label}</a></li>`
+  ).join("");
+}
+
 function renderRandomQuestion(exercises) {
   if (!exercises.length) {
     randomQuestionCard.innerHTML =
@@ -625,8 +678,34 @@ function renderRandomQuestion(exercises) {
   }
   const chosen = exercises[Math.floor(Math.random() * exercises.length)];
   randomQuestionCard.innerHTML = `
-    <div class="exercise-meta">${chosen.source} • ${chosen.year} • ${chosen.topic} • ${chosen.difficulty}</div>
+    <div class="exercise-meta">${chosen.source} • ${chosen.year} • ${chosen.paper} • ${chosen.topic} • ${chosen.difficulty} • ${chosen.marks} marks</div>
     <p>${chosen.question}</p>
+  `;
+}
+
+function renderMockPaper(subject) {
+  const filtered = getFilteredExercises(subject);
+  if (filtered.length < 4) {
+    mockPaperCard.innerHTML =
+      '<p class="empty">Not enough questions for a mock paper. Broaden your filters and try again.</p>';
+    return;
+  }
+
+  const config = getMockConfig(subject);
+  const picked = pickQuestionsForMockPaper(filtered, config.questionCount);
+  const totalMarks = picked.reduce((sum, exercise) => sum + exercise.marks, 0);
+  mockPaperCard.innerHTML = `
+    <h4>${subject.name} — ${config.title}</h4>
+    <p class="exercise-meta">Duration: ${config.duration} • Suggested total: ${totalMarks} marks</p>
+    <p>${config.instruction}</p>
+    <ol>
+      ${picked
+        .map(
+          (exercise) =>
+            `<li><strong>[${exercise.marks} marks]</strong> ${exercise.question}</li>`
+        )
+        .join("")}
+    </ol>
   `;
 }
 
@@ -647,7 +726,7 @@ function renderExercises(subject) {
   filtered.forEach((exercise) => {
     const item = document.createElement("li");
     item.innerHTML = `
-      <div class="exercise-meta">${exercise.source} • ${exercise.year} • ${exercise.topic} • ${exercise.difficulty}</div>
+      <div class="exercise-meta">${exercise.source} • ${exercise.year} • ${exercise.paper} • ${exercise.topic} • ${exercise.difficulty} • ${exercise.marks} marks</div>
       <p>${exercise.question}</p>
     `;
     exerciseList.appendChild(item);
@@ -659,6 +738,8 @@ function rerenderExercisesAndClearRandom() {
   renderExercises(subject);
   randomQuestionCard.innerHTML =
     '<p class="empty">Use the button to pick a random question from your current filters.</p>';
+  mockPaperCard.innerHTML =
+    '<p class="empty">Generate a mock paper based on your current subject and filters.</p>';
 }
 
 function renderAll() {
@@ -667,9 +748,12 @@ function renderAll() {
   renderTopicFilter(subject);
   renderHeader(subject);
   renderTutorials(subject);
+  renderOfficialResources();
   renderExercises(subject);
   randomQuestionCard.innerHTML =
     '<p class="empty">Use the button to pick a random question from your current filters.</p>';
+  mockPaperCard.innerHTML =
+    '<p class="empty">Generate a mock paper based on your current subject and filters.</p>';
 }
 
 topicFilter.addEventListener("change", rerenderExercisesAndClearRandom);
@@ -678,6 +762,9 @@ difficultyFilter.addEventListener("change", rerenderExercisesAndClearRandom);
 keywordFilter.addEventListener("input", rerenderExercisesAndClearRandom);
 randomQuestionBtn.addEventListener("click", () =>
   renderRandomQuestion(getFilteredExercises(getSelectedSubject()))
+);
+generateMockBtn.addEventListener("click", () =>
+  renderMockPaper(getSelectedSubject())
 );
 
 renderAll();

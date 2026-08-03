@@ -10,8 +10,16 @@ Simple static website for HKDSE-focused study support.
 - 180 generated, syllabus-aligned practice questions per subject
 - Advanced exercise filters: topic, source, difficulty, keyword search
 - Quick Practice random question picker based on active filters
+- DSE-style mock paper builder generated from filtered original questions
+- Official HKDSE resource links to HKEAA past-paper/report pages
 - Current subjects: Mathematics, English, Physics, Chemistry, Biology, Economics, BAFS, ICT, History (1620 questions total)
 - Automatic syllabus filtering: only questions marked in HKDSE syllabus are displayed
+
+## Copyright-safe content policy
+
+- This site links to official HKDSE past-paper resources on HKEAA.
+- Past-paper files are **not** copied into this repository.
+- Question banks and mock papers on this site are original DSE-style practice content.
 
 ## Run locally
 
